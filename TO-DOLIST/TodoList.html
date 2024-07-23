@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO LIST</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        #taskInput {
+            text-align: left;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>TODO LIST</h1>
+        <label for="dateInput">Date:</label>
+        <input id="dateInput" type="date">
+        <label for="taskInput">Task description:</label>
+        <textarea id="taskInput"></textarea>
+        <br><br><br>
+        <button onclick="addTask()">Add Task</button>
+    </center>
+    <br>
+    <center>
+        <table style="width: 500px;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Task Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="taskInfo"></tbody>
+        </table>
+    </center>
+
+    <script>
+        
+        function validTask() {
+            var taskDescription = document.getElementById('taskInput').value;
+            return taskDescription.length > 0;
+        }
+
+        function validDate() {
+            var taskDate = new Date(document.getElementById('dateInput').value);
+            var currentDate = new Date();
+            taskDate.setHours(0, 0, 0, 0);
+            currentDate.setHours(0, 0, 0, 0);
+            return taskDate >= currentDate;
+        }
+
+        
+        function addTask() {
+            if (validTask() && validDate()) {
+                var dateInput = document.getElementById('dateInput').value;
+                var taskInput = document.getElementById('taskInput').value;
+                var tableBody = document.getElementById('taskInfo');
+
+                var newRow = document.createElement('tr');
+
+                var dateValue = document.createElement('td');
+                dateValue.innerText = dateInput;
+                newRow.appendChild(dateValue);
+
+                var taskDescription = document.createElement('td');
+                taskDescription.innerText = taskInput;
+                newRow.appendChild(taskDescription);
+
+                var taskStatus = document.createElement('td');
+                var checkBox = document.createElement('input');
+                checkBox.type = 'checkbox';
+                taskStatus.appendChild(checkBox);
+                newRow.appendChild(taskStatus);
+
+                tableBody.appendChild(newRow);
+                checkBox.onchange = function() {
+                    checkTask(checkBox);
+                }
+
+                
+                document.getElementById('dateInput').value = '';
+                document.getElementById('taskInput').value = '';
+            } else {
+                alert("Please enter a valid date and task description.");
+            }
+        }
+
+
+        function checkTask(checkbox) {
+            var tableBody = document.getElementById('taskInfo');
+            if (checkbox.checked) {
+                tableBody.appendChild(checkbox.parentNode.parentNode);
+            } else {
+                tableBody.insertBefore(checkbox.parentNode.parentNode, tableBody.firstChild);
+            }
+        }
+    </script>
+</body>
+</html>
