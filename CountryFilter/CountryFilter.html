@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CountryFilter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        select, input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CountryFilter</h1>
+    <form>
+        <label for="countrySelect">Choose a country:</label>
+        <select id="countrySelect">
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+            <option value="Mexico">Mexico</option>
+            <option value="UK">UK</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="India">India</option>
+            <option value="China">China</option>
+            <option value="Japan">Japan</option>
+            <option value="Australia">Australia</option>
+        </select>
+        <br>
+        <label for="countryInput">Type country name:</label>
+        <input type="text" id="countryInput" oninput="myFunction()">
+    </form>
+
+    <script>
+        function myFunction() {
+            var input = document.getElementById('countryInput').value.toLowerCase();
+            var select = document.getElementById('countrySelect');
+            var options = select.options;
+            var found = false;
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value.toLowerCase() === input) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                alert('Country found: ' + input.charAt(0).toUpperCase() + input.slice(1));
+                document.getElementById('countryInput').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
